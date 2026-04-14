@@ -1,0 +1,22 @@
+{
+  "appName": "POS System",
+  "login": "Login",
+  "email": "Email",
+  "password": "Password",
+  "dashboard": "Dashboard",
+  "products": "Products",
+  "categories": "Categories",
+  "sales": "Sales",
+  "orders": "Orders",
+  "users": "Users",
+  "reports": "Reports",
+  "logout": "Logout",
+  "newSale": "New Sale",
+  "save": "Save",
+  "name": "Name",
+  "price": "Price",
+  "quantity": "Quantity",
+  "totalSales": "Total Sales",
+  "totalOrders": "Total Orders",
+  "lowStock": "Low Stock"
+}

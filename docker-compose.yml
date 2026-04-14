@@ -1,0 +1,21 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: pos-backend
+    restart: unless-stopped
+    volumes:
+      - ./backend/database:/var/www/html/database
+      - ./backend/storage:/var/www/html/storage
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: pos-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
