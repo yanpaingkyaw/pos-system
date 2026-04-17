@@ -42,6 +42,8 @@ export interface ShopSetting {
   shop_name: string
   header_text?: string | null
   logo_path?: string | null
+  payment_methods?: string[]
+  wallet_providers?: string[]
 }
 
 export interface SaleItemPayload {

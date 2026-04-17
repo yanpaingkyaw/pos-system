@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Sale;
+use App\Models\ShopSetting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,6 +31,24 @@ class SaleController extends Controller
             'items.*.product_id' => ['required', 'exists:products,id'],
             'items.*.quantity' => ['required', 'integer', 'min:1'],
         ]);
+
+        $shopSettings = ShopSetting::first();
+        $allowedPaymentMethods = $shopSettings?->payment_methods ?? ['cash', 'wallet'];
+        $walletProviders = $shopSettings?->wallet_providers ?? ['KBZPay', 'WavePay', 'AYA Pay', 'CB Pay'];
+
+        $incomingMethod = $validated['payment_method'];
+        if (str_starts_with($incomingMethod, 'wallet:')) {
+            if (!in_array('wallet', $allowedPaymentMethods, true)) {
+                return response()->json(['message' => 'Wallet payment is not enabled.'], 422);
+            }
+
+            $provider = substr($incomingMethod, 7);
+            if (!in_array($provider, $walletProviders, true)) {
+                return response()->json(['message' => 'Selected wallet provider is not allowed.'], 422);
+            }
+        } elseif (!in_array($incomingMethod, $allowedPaymentMethods, true)) {
+            return response()->json(['message' => 'Selected payment method is not allowed.'], 422);
+        }
 
         $sale = DB::transaction(function () use ($validated, $request) {
             $subtotal = 0;

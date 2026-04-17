@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         ShopSetting::updateOrCreate(['id' => 1], [
             'shop_name' => 'My POS Shop',
             'header_text' => 'Thank you for shopping with us.',
+            'payment_methods' => ['cash', 'wallet'],
+            'wallet_providers' => ['KBZPay', 'WavePay', 'AYA Pay', 'CB Pay'],
         ]);
 
         $ownerRole = Role::firstOrCreate(['slug' => 'owner'], ['name' => 'Owner']);

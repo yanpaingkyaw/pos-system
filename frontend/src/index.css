@@ -181,6 +181,15 @@ select {
   background: #fff;
 }
 
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.5rem 0.6rem;
+  background: #fff;
+  font: inherit;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -432,6 +441,36 @@ td {
   padding: 0 0.75rem 0.75rem;
 }
 
+.pos-payment-methods {
+  border-top: 1px solid var(--line);
+  padding: 0.75rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.pos-payment-methods p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.method-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.method-chips button {
+  border-radius: 999px;
+  font-size: 0.84rem;
+}
+
+.method-chips button.active {
+  background: #16a34a;
+  border-color: #15803d;
+  color: #fff;
+}
+
 .pos-summary p {
   display: flex;
   justify-content: space-between;
@@ -588,6 +627,34 @@ td {
 .settings-form label {
   display: grid;
   gap: 0.35rem;
+}
+
+.settings-options {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.6rem;
+}
+
+.settings-options legend {
+  font-size: 0.9rem;
+  color: var(--muted);
+  padding: 0 0.25rem;
+}
+
+.settings-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.45rem;
+}
+
+.settings-check-item {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.settings-check-item input {
+  width: auto;
 }
 
 .settings-logo-preview img {

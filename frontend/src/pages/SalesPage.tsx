@@ -51,6 +51,8 @@ export default function SalesPage() {
   const [activeCategory, setActiveCategory] = useState<number | 'all'>('all')
   const [search, setSearch] = useState('')
   const [cart, setCart] = useState<CartItem[]>([])
+  const [paymentMethod, setPaymentMethod] = useState('cash')
+  const [walletProvider, setWalletProvider] = useState('KBZPay')
   const [discount, setDiscount] = useState('0')
   const [tax, setTax] = useState('0')
   const [message, setMessage] = useState('')
@@ -124,6 +126,25 @@ export default function SalesPage() {
   }, [products])
 
   useEffect(() => {
+    if (!settings) {
+      return
+    }
+
+    const availableMethods = settings.payment_methods?.length ? settings.payment_methods : ['cash', 'wallet']
+    const availableWallets = settings.wallet_providers?.length
+      ? settings.wallet_providers
+      : ['KBZPay', 'WavePay', 'AYA Pay', 'CB Pay']
+
+    if (!availableMethods.includes(paymentMethod)) {
+      setPaymentMethod(availableMethods[0])
+    }
+
+    if (!availableWallets.includes(walletProvider)) {
+      setWalletProvider(availableWallets[0])
+    }
+  }, [settings, paymentMethod, walletProvider])
+
+  useEffect(() => {
     if (!receipt) {
       return
     }
@@ -168,6 +189,42 @@ export default function SalesPage() {
   )
 
   const total = Math.max(0, subtotal + Number(tax || 0) - Number(discount || 0))
+
+  const availablePaymentMethods = settings?.payment_methods?.length
+    ? settings.payment_methods
+    : ['cash', 'wallet']
+
+  const availableWalletProviders = settings?.wallet_providers?.length
+    ? settings.wallet_providers
+    : ['KBZPay', 'WavePay', 'AYA Pay', 'CB Pay']
+
+  const paymentMethodLabel = (method: string) => {
+    if (method === 'cash') {
+      return 'Cash'
+    }
+
+    if (method === 'wallet') {
+      return 'Wallet'
+    }
+
+    if (method === 'bank_transfer') {
+      return 'Bank Transfer'
+    }
+
+    if (method === 'card') {
+      return 'Card'
+    }
+
+    return method
+  }
+
+  const formatReceiptPaymentMethod = (method: string) => {
+    if (method.startsWith('wallet:')) {
+      return method.replace('wallet:', 'Wallet - ')
+    }
+
+    return paymentMethodLabel(method)
+  }
 
   const addToCart = (product: Product) => {
     if (!product.is_active || product.quantity <= 0) {
@@ -298,7 +355,7 @@ export default function SalesPage() {
           <p class="meta">Receipt #${receipt.id}</p>
           <p class="meta">${new Date(receipt.created_at).toLocaleString()}</p>
           <p class="meta">Cashier: ${cashierName}</p>
-          <p class="meta">Payment: ${receipt.payment_method}</p>
+          <p class="meta">Payment: ${formatReceiptPaymentMethod(receipt.payment_method)}</p>
           <div class="line"></div>
           <table>
             <thead><tr><th>Item</th><th>Total</th></tr></thead>
@@ -331,8 +388,10 @@ export default function SalesPage() {
     setSubmitting(true)
     setMessage('')
     try {
+      const payloadMethod = paymentMethod === 'wallet' ? `wallet:${walletProvider}` : paymentMethod
+
       const response = await api.post<SaleReceipt>('/sales', {
-        payment_method: 'cash',
+        payment_method: payloadMethod,
         discount: Number(discount),
         tax: Number(tax),
         items: cart.map((item) => ({ product_id: item.product.id, quantity: item.quantity })),
@@ -478,6 +537,35 @@ export default function SalesPage() {
             </label>
           </div>
 
+          <div className="pos-payment-methods">
+            <p>Payment Method</p>
+            <div className="method-chips">
+              {availablePaymentMethods.map((method) => (
+                <button
+                  key={method}
+                  type="button"
+                  className={paymentMethod === method ? 'active' : ''}
+                  onClick={() => setPaymentMethod(method)}
+                >
+                  {paymentMethodLabel(method)}
+                </button>
+              ))}
+            </div>
+
+            {paymentMethod === 'wallet' ? (
+              <label>
+                Wallet Provider
+                <select value={walletProvider} onChange={(event) => setWalletProvider(event.target.value)}>
+                  {availableWalletProviders.map((provider) => (
+                    <option key={provider} value={provider}>
+                      {provider}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : null}
+          </div>
+
           <div className="pos-summary">
             <p><span>Subtotal</span><strong>{subtotal.toFixed(2)}</strong></p>
             <p><span>Discount</span><strong>- {Number(discount).toFixed(2)}</strong></p>
@@ -516,7 +604,7 @@ export default function SalesPage() {
               <h4>{settings?.shop_name ?? 'POS System'}</h4>
               {settings?.header_text ? <small>{settings.header_text}</small> : null}
               <small>Cashier: {receipt.user?.name ?? currentUser?.name ?? 'Cashier'}</small>
-              <small>Payment: {receipt.payment_method}</small>
+              <small>Payment: {formatReceiptPaymentMethod(receipt.payment_method)}</small>
             </div>
 
             <div className="receipt-items">
