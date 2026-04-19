@@ -44,6 +44,14 @@ export interface ShopSetting {
   logo_path?: string | null
   payment_methods?: string[]
   wallet_providers?: string[]
+  payment_options?: Array<{
+    code: string
+    label: string
+    type: string
+    enabled: boolean
+    is_cash: boolean
+    sort_order: number
+  }>
 }
 
 export interface SaleItemPayload {

@@ -20,6 +20,16 @@ class DatabaseSeeder extends Seeder
             'header_text' => 'Thank you for shopping with us.',
             'payment_methods' => ['cash', 'wallet'],
             'wallet_providers' => ['KBZPay', 'WavePay', 'AYA Pay', 'CB Pay'],
+            'payment_options' => [
+                ['code' => 'cash', 'label' => 'Cash (MMK)', 'type' => 'cash', 'enabled' => true, 'is_cash' => true, 'sort_order' => 1],
+                ['code' => 'kpay', 'label' => 'KBZPay (MMK)', 'type' => 'wallet', 'enabled' => true, 'is_cash' => false, 'sort_order' => 2],
+                ['code' => 'wavepay', 'label' => 'WavePay (MMK)', 'type' => 'wallet', 'enabled' => true, 'is_cash' => false, 'sort_order' => 3],
+                ['code' => 'ayapay', 'label' => 'AYA Pay (MMK)', 'type' => 'wallet', 'enabled' => true, 'is_cash' => false, 'sort_order' => 4],
+                ['code' => 'cbpay', 'label' => 'CB Pay (MMK)', 'type' => 'wallet', 'enabled' => true, 'is_cash' => false, 'sort_order' => 5],
+                ['code' => 'cb_mobile', 'label' => 'CB Mobile Banking (MMK)', 'type' => 'bank', 'enabled' => true, 'is_cash' => false, 'sort_order' => 6],
+                ['code' => 'aya_mobile', 'label' => 'AYA Mobile Banking (MMK)', 'type' => 'bank', 'enabled' => true, 'is_cash' => false, 'sort_order' => 7],
+                ['code' => 'mmqr_aya', 'label' => 'MMQR AYA (MMK)', 'type' => 'bank', 'enabled' => true, 'is_cash' => false, 'sort_order' => 8],
+            ],
         ]);
 
         $ownerRole = Role::firstOrCreate(['slug' => 'owner'], ['name' => 'Owner']);

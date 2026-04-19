@@ -12,6 +12,7 @@ class ShopSetting extends Model
         'logo_path',
         'payment_methods',
         'wallet_providers',
+        'payment_options',
     ];
 
     protected function casts(): array
@@ -19,6 +20,7 @@ class ShopSetting extends Model
         return [
             'payment_methods' => 'array',
             'wallet_providers' => 'array',
+            'payment_options' => 'array',
         ];
     }
 }

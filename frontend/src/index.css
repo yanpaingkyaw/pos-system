@@ -245,6 +245,63 @@ td {
   padding: 0.85rem;
 }
 
+.pos-sale-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.7rem;
+  overflow-x: auto;
+}
+
+.pos-sale-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 10px;
+  padding: 0.35rem 0.55rem;
+  min-width: 62px;
+  justify-content: center;
+}
+
+.pos-sale-tab span {
+  font-weight: 700;
+}
+
+.pos-sale-tab small {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.pos-sale-tab i {
+  font-style: normal;
+  font-size: 0.75rem;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+}
+
+.pos-sale-tab.active {
+  background: #16a34a;
+  color: #fff;
+  border-color: #15803d;
+}
+
+.pos-sale-tab.active small,
+.pos-sale-tab.active i {
+  color: #e2e8f0;
+  border-color: rgba(226, 232, 240, 0.7);
+}
+
+.pos-tab-add {
+  border-radius: 10px;
+  min-width: 42px;
+  font-weight: 700;
+}
+
 .pos-terminal {
   display: grid;
   grid-template-columns: 1.55fr 1fr;
@@ -665,6 +722,126 @@ td {
   border: 1px solid #d1d5db;
 }
 
+.payment-option-list {
+  display: grid;
+  gap: 0.55rem;
+  margin-bottom: 0.55rem;
+}
+
+.payment-option-item {
+  display: grid;
+  grid-template-columns: 1.1fr 2fr 1fr auto auto auto;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.pos-stepper {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin-bottom: 0.75rem;
+}
+
+.pos-stepper button.active {
+  background: #16a34a;
+  border-color: #15803d;
+  color: #fff;
+}
+
+.pos-payment-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 0.75rem;
+}
+
+.payment-method-panel {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.65rem;
+  display: grid;
+  gap: 0.45rem;
+  align-content: start;
+  background: #f8fafc;
+}
+
+.payment-method-panel button.active {
+  background: #16a34a;
+  border-color: #15803d;
+  color: #fff;
+}
+
+.payment-center-panel {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.payment-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.payment-summary-grid article {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.55rem;
+  background: #f8fafc;
+}
+
+.payment-summary-grid span {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.payment-summary-grid strong {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 1.15rem;
+}
+
+.payment-lines {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.55rem;
+  max-height: 220px;
+  overflow: auto;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.payment-line-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.45rem;
+  align-items: center;
+  border-bottom: 1px dashed #e2e8f0;
+  padding-bottom: 0.35rem;
+}
+
+.payment-entry {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.45rem;
+}
+
+.payment-keypad {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.payment-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.receipt-final-screen h3 {
+  margin: 0 0 0.7rem;
+}
+
 @media (max-width: 920px) {
   .shell {
     grid-template-columns: 1fr;
@@ -680,6 +857,11 @@ td {
   }
 
   .pos-terminal {
+    grid-template-columns: 1fr;
+  }
+
+  .pos-payment-layout,
+  .payment-option-item {
     grid-template-columns: 1fr;
   }
 }

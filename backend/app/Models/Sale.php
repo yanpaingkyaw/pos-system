@@ -12,6 +12,7 @@ class Sale extends Model
         'tax',
         'discount',
         'total',
+        'change_amount',
         'payment_method',
         'customer_name',
         'customer_phone',
@@ -25,6 +26,7 @@ class Sale extends Model
             'tax' => 'decimal:2',
             'discount' => 'decimal:2',
             'total' => 'decimal:2',
+            'change_amount' => 'decimal:2',
         ];
     }
 
@@ -36,5 +38,10 @@ class Sale extends Model
     public function items()
     {
         return $this->hasMany(SaleItem::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(SalePayment::class);
     }
 }
